@@ -120,8 +120,14 @@ class FilterViewer(QtWidgets.QWidget):
                 continue
 
             wavelengths, throughput = FILTER_DATA[name].T
+            if 'HST' in name:
+                wavelengths = wavelengths/10
+            # remove 0s
+            throughput[throughput<1e-8] = np.nan
+            #normalise
+            # throughput = throughput/np.nanmax(throughput)
     
-            center = wavelengths[np.argmax(throughput)]
+            center = wavelengths[np.nanargmax(throughput)]
             color = wavelength_to_color(center)
             pen = pg.mkPen(color=color, width=4)
 
@@ -132,7 +138,7 @@ class FilterViewer(QtWidgets.QWidget):
                 fill.setBrush(pg.mkBrush(color[:-1] + (80,)))
                 self.plot_widget.addItem(fill)
 
-            peak_index = np.argmax(throughput)
+            peak_index = np.nanargmax(throughput)
             peak_x = wavelengths[peak_index]
             peak_y = throughput[peak_index]
             text = pg.TextItem(name, anchor=(0.5, 0.8), color=color)

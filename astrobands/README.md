@@ -9,3 +9,4 @@ Inspired by the need to visually compare the wavelengths observable from various
 To do:
 - Add mouse curser readout of wavelength
 - load an SED to compare throughput
+- add normalise checkbox toggle
