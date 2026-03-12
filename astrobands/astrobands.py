@@ -12,12 +12,13 @@ __maintainer__ = "Steven Gough-Kelly"
 __email__ = "sgoughkelly@gmail.com"
 __status__ = "Production"
 
-filters = glob('./filters/observatories/**/*.dat',recursive=True)
+filters = glob('./filters/observatories/*.dat',recursive=True)
+filters.sort()
 
 FILTER_DATA = {}
 for f in filters:
     tmp = np.genfromtxt(f)
-    name = f.split('/')[-1].split('.')[0]
+    name = f.split('/')[-1].split('.dat')[0]
     FILTER_DATA[name] = tmp
 
 def wavelength_to_color(wavelength, gamma=0.8):
@@ -25,33 +26,33 @@ def wavelength_to_color(wavelength, gamma=0.8):
         A = 1.
     else:
         A = 0.7
-    if wavelength < 380:
-        wavelength = 380.
-    if wavelength > 750:
-        wavelength = 750.
-    if 380 <= wavelength <= 440:
-        attenuation = 0.3 + 0.7 * (wavelength - 380) / (440 - 380)
-        R = ((-(wavelength - 440) / (440 - 380)) * attenuation) ** gamma
+    if wavelength < 3800:
+        wavelength = 3800.
+    if wavelength > 7500:
+        wavelength = 7500.
+    if 3800 <= wavelength <= 4400:
+        attenuation = 0.3 + 0.7 * (wavelength - 3800) / (4400 - 3800)
+        R = ((-(wavelength - 4400) / (4400 - 3800)) * attenuation) ** gamma
         G = 0.0
         B = (1.0 * attenuation) ** gamma
-    elif 440 <= wavelength <= 490:
+    elif 4400 <= wavelength <= 4900:
         R = 0.0
-        G = ((wavelength - 440) / (490 - 440)) ** gamma
+        G = ((wavelength - 4400) / (4900 - 4400)) ** gamma
         B = 1.0
-    elif 490 <= wavelength <= 510:
+    elif 4900 <= wavelength <= 5100:
         R = 0.0
         G = 1.0
-        B = (-(wavelength - 510) / (510 - 490)) ** gamma
-    elif 510 <= wavelength <= 580:
-        R = ((wavelength - 510) / (580 - 510)) ** gamma
+        B = (-(wavelength - 5100) / (5100 - 4900)) ** gamma
+    elif 5100 <= wavelength <= 5800:
+        R = ((wavelength - 5100) / (5800 - 5100)) ** gamma
         G = 1.0
         B = 0.0
-    elif 580 <= wavelength <= 645:
+    elif 5800 <= wavelength <= 6450:
         R = 1.0
-        G = (-(wavelength - 645) / (645 - 580)) ** gamma
+        G = (-(wavelength - 6450) / (6450 - 5800)) ** gamma
         B = 0.0
-    elif 645 <= wavelength <= 750:
-        attenuation = 0.3 + 0.7 * (750 - wavelength) / (750 - 645)
+    elif 6450 <= wavelength <= 7500:
+        attenuation = 0.3 + 0.7 * (7500 - wavelength) / (7500 - 6450)
         R = (1.0 * attenuation) ** gamma
         G = 0.0
         B = 0.0
