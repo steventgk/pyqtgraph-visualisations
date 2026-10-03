@@ -22,10 +22,11 @@ for f in filters:
     FILTER_DATA[name] = tmp
 
 def wavelength_to_color(wavelength, gamma=0.8):
-    if wavelength >= 380 and wavelength <= 750:
-        A = 1.
-    else:
-        A = 0.7
+    # if wavelength >= 380 and wavelength <= 750:
+        # A = 1.
+    # else:
+        # A = 0.7
+    A = 1.
     if wavelength < 3800:
         wavelength = 3800.
     if wavelength > 7500:
